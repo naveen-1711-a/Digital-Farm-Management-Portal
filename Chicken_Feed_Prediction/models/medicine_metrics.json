@@ -1,0 +1,45 @@
+{
+    "target": "medicine_cost_next_month",
+    "dataset": {
+        "rows": 50000,
+        "features": 95
+    },
+    "training": {
+        "MAE": 1242.01432321664,
+        "RMSE": 2729.956524417407,
+        "MAPE": 6.839245770506099,
+        "R2": 0.9992927578120014,
+        "Median_Absolute_Error": 92.65264404296875,
+        "Maximum_Absolute_Error": 33355.43000000005
+    },
+    "validation": {
+        "MAE": 2578.02644616333,
+        "RMSE": 7451.417626587524,
+        "MAPE": 7.9494212282976635,
+        "R2": 0.9947383858285939,
+        "Median_Absolute_Error": 90.0090869140625,
+        "Maximum_Absolute_Error": 160653.755
+    },
+    "test": {
+        "MAE": 2533.885894321655,
+        "RMSE": 6948.646261001306,
+        "MAPE": 7.80403676812986,
+        "R2": 0.995265591698839,
+        "Median_Absolute_Error": 96.124873046875,
+        "Maximum_Absolute_Error": 172841.8075
+    },
+    "generalization": {
+        "r2_gap": 0.00402716611316245
+    },
+    "error_distribution": {
+        "50th": 96.124873046875,
+        "75th": 2196.584179687501,
+        "90th": 7799.645750000008,
+        "95th": 13313.213499999947,
+        "99th": 28436.231800000034
+    },
+    "model": {
+        "type": "XGBRegressor",
+        "best_iteration": 401
+    }
+}

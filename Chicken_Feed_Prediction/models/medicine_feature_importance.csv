@@ -1,0 +1,85 @@
+feature,importance
+numeric__medicine_cost,0.6522678
+numeric__medicine_price_pressure,0.23635371
+numeric__medicine_base_cost,0.08031559
+numeric__previous_month_medicine_cost,0.026304632
+numeric__disease_cases,0.0007613365
+categorical__disease_severity_Medium,0.0006863416
+numeric__medicine_quantity,0.0006827627
+categorical__disease_severity_Critical,0.000670658
+categorical__disease_severity_High,0.00028096302
+categorical__disease_type_Healthy,0.00014637884
+categorical__disease_severity_Low,0.000114800394
+numeric__disease_rate,7.976791e-05
+numeric__biosecurity_score,5.4878437e-05
+categorical__medicine_type_Supportive Treatment,4.9314414e-05
+numeric__environment_risk_score,4.0396266e-05
+numeric__medicine_price,3.2822518e-05
+numeric__medicine_cost_change,3.142861e-05
+numeric__temperature_c,3.1340045e-05
+numeric__humidity_percent,3.0874806e-05
+categorical__disease_type_Coccidiosis,3.0759653e-05
+numeric__medicine_cost_per_bird,2.9563893e-05
+numeric__medicine_cost_change_percent,2.5988558e-05
+categorical__disease_type_Newcastle Disease,2.3924951e-05
+categorical__season_Summer,2.378837e-05
+numeric__date_month_sin,2.3760074e-05
+numeric__medicine_quantity_per_bird,2.359063e-05
+categorical__season_Monsoon,2.3012402e-05
+numeric__date_month_cos,2.2714583e-05
+numeric__total_operating_cost,2.2480974e-05
+numeric__age_days,2.2448497e-05
+categorical__disease_type_Avian Influenza,2.1858663e-05
+numeric__electricity_cost,2.1735712e-05
+numeric__ammonia_ppm,2.1722924e-05
+numeric__average_weight_kg,2.169301e-05
+numeric__weight_progress_ratio,2.1572812e-05
+categorical__breed_Lohmann Brown,2.137723e-05
+numeric__date_day,2.1313654e-05
+numeric__current_chicken_count,2.123747e-05
+numeric__date_year,2.1119213e-05
+numeric__date_day_of_year,2.110335e-05
+categorical__breed_Cobb 500,2.1067593e-05
+numeric__mortality_count,2.0989832e-05
+numeric__date_dayofyear_cos,2.0782616e-05
+numeric__mortality_rate,2.0693466e-05
+numeric__birds_per_acre,2.0691416e-05
+numeric__daily_feed_consumption_kg,2.067527e-05
+numeric__target_weight_kg,2.0517567e-05
+numeric__initial_chicken_count,2.04245e-05
+numeric__weight_gap_kg,2.0413469e-05
+numeric__vaccination_cost,2.030626e-05
+numeric__vet_cost,2.0217363e-05
+numeric__age_months,2.0203253e-05
+categorical__breed_Hubbard,2.0193642e-05
+numeric__water_consumption_liters,2.0062846e-05
+numeric__vaccination_count,2.002707e-05
+numeric__farm_area_acres,2.0024645e-05
+numeric__feed_price_per_kg,1.9910083e-05
+numeric__date_dayofyear_sin,1.9893627e-05
+categorical__season_Winter,1.9890775e-05
+numeric__growth_rate_g_per_day,1.9874318e-05
+numeric__survival_ratio,1.9855104e-05
+numeric__date_weekofyear,1.969613e-05
+numeric__labour_cost,1.9510246e-05
+numeric__mortality_per_current_bird,1.9496672e-05
+numeric__feed_cost,1.9303418e-05
+numeric__date_is_weekend,1.9221301e-05
+numeric__birds_lost,1.89254e-05
+numeric__vet_visit_count,1.7671813e-05
+categorical__disease_type_Salmonella,1.6849344e-05
+categorical__medicine_type_Respiratory Treatment,0.0
+categorical__medicine_type_Antimicrobial,0.0
+categorical__medicine_type_Anticoccidial,0.0
+categorical__medicine_type_Preventive Supplement,0.0
+categorical__chicken_type_Layer,0.0
+categorical__breed_Arbor Acres,0.0
+categorical__disease_type_Infectious Bronchitis,0.0
+numeric__date_month,0.0
+categorical__disease_type_Fowl Cholera,0.0
+numeric__date_quarter,0.0
+categorical__breed_Ross 308,0.0
+categorical__breed_ISA Brown,0.0
+categorical__breed_Hy-Line Brown,0.0
+categorical__chicken_type_Broiler,0.0
+categorical__disease_type_Respiratory Infection,0.0

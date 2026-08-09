@@ -1,0 +1,21 @@
+{
+    "prediction_time": "25-07-2026 18:21:56",
+    "image": "Newcastle_Disease_0_new_347_ncd.73.jpg",
+    "disease": "Newcastle_Disease",
+    "confidence": 96.38,
+    "prediction_status": "Prediction Available",
+    "status": "Critical",
+    "severity": "High",
+    "recommendation": [
+        "Immediately isolate suspected infected birds.",
+        "Contact a veterinarian immediately.",
+        "Disinfect the poultry shed and equipment.",
+        "Follow veterinary/public-health guidance for control and vaccination."
+    ],
+    "probabilities": {
+        "Coccidiosis": 2.11,
+        "Healthy": 0.86,
+        "Newcastle_Disease": 96.38,
+        "Salmonella": 0.65
+    }
+}

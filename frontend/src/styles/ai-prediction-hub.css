@@ -1,0 +1,170 @@
+/* AI Prediction Hub - Sub-Navbar matching homepage navbar style */
+
+.ai-hub {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 80px);
+  font-family: 'Outfit', sans-serif;
+}
+
+/* ── Sub-Navbar: same glass style as homepage .navbar ── */
+.ai-hub-navbar {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  position: sticky;
+  top: 80px;
+  z-index: 100;
+}
+
+.ai-hub-navbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 8%;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Title — mirrors .logo */
+.ai-hub-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  flex-shrink: 0;
+  cursor: default;
+}
+
+.ai-hub-title-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.ai-hub-title h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.ai-hub-title p {
+  display: none;
+}
+
+/* Tabs container — mirrors .nav-links pill */
+.ai-hub-tabs {
+  display: flex;
+  gap: 0.25rem;
+  background: rgba(241, 245, 249, 0.7);
+  padding: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid rgba(226, 232, 240, 0.5);
+}
+
+/* Individual tab — mirrors .nav-links a */
+.ai-hub-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.ai-hub-tab:hover:not(.active) {
+  color: #10b981;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Active Feed tab */
+.ai-hub-tab.active {
+  background: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: #10b981;
+}
+
+/* Active Medicine tab override */
+.ai-hub-tab.active.medicine-active {
+  color: #dc2626;
+}
+
+.ai-hub-tab-icon {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.ai-hub-tab-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-hub-tab-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Hide sub-description & dot for clean navbar look */
+.ai-hub-tab-desc,
+.ai-hub-tab-dot {
+  display: none;
+}
+
+/* Content Panel */
+.ai-hub-content {
+  flex: 1;
+  background: #f8fafc;
+}
+
+.ai-hub-panel {
+  width: 100%;
+}
+
+/* Tab switch fade-in */
+.fade-in {
+  animation: hubFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes hubFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .ai-hub-navbar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem 5%;
+    gap: 0.65rem;
+  }
+
+  .ai-hub-tabs {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ai-hub-tab {
+    flex: 1;
+    justify-content: center;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.88rem;
+  }
+}

@@ -1,0 +1,55 @@
+{
+    "model": "XGBoost",
+    "objective": "Next month feed cost prediction",
+    "dataset": "data/feed_dataset_50000.csv",
+    "target": "feed_cost_next_month",
+    "samples": 50000,
+    "features": 78,
+    "target_transform": "log1p",
+    "train": {
+        "mae": 46158.12470925148,
+        "rmse": 68681.97587899056,
+        "mape": 3.59388463481152,
+        "r2": 0.9928783883651857,
+        "median_error": 28694.99014612718,
+        "max_error": 634031.8998954669
+    },
+    "validation": {
+        "mae": 48903.82461467276,
+        "rmse": 73376.74888346424,
+        "mape": 3.722131553056766,
+        "r2": 0.9922909276659617,
+        "median_error": 30577.339705582883,
+        "max_error": 511108.67159464257
+    },
+    "test": {
+        "mae": 47922.57727864089,
+        "rmse": 72282.17516106962,
+        "mape": 3.6823010130201164,
+        "r2": 0.9923481791500616,
+        "median_error": 29898.172112682718,
+        "max_error": 784164.4615682829
+    },
+    "generalization": {
+        "r2_gap": 0.0005302092151241444
+    },
+    "error_percentiles": {
+        "50": 29898.172112682718,
+        "75": 65943.04500999919,
+        "90": 115743.07783383137,
+        "95": 155430.76754949606,
+        "99": 246650.30786249725
+    },
+    "model_parameters": {
+        "n_estimators": 5000,
+        "max_depth": 6,
+        "min_child_weight": 2,
+        "learning_rate": 0.015,
+        "subsample": 0.9,
+        "colsample_bytree": 0.9,
+        "colsample_bylevel": 0.9,
+        "gamma": 0.02,
+        "reg_alpha": 0.001,
+        "reg_lambda": 5.0
+    }
+}

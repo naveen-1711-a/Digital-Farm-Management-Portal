@@ -1,0 +1,2 @@
+prediction_date,chicken_type,breed,current_chicken_count,age_days,daily_feed_consumption_kg,feed_price_per_kg,current_feed_cost,previous_month_feed_cost,predicted_next_month_feed_cost,lower_estimate,upper_estimate,change_from_current,change_percent,test_model_note
+2026-06-30,Broiler,Cobb 500,9800,35,1800.0,42.0,2268000.0,2200000.0,2312976.141754465,2220457.0960842865,2405495.187424644,44976.14175446518,1.9830750332656604,Prediction generated using trained XGBoost model.
