@@ -1,4 +1,5 @@
 const BiosecurityLog = require('../models/BiosecurityLog');
+const agentEventBus = require('../agents/orchestrator/agentEventBus');
 
 exports.getAll = async (req, res) => {
   try {
@@ -23,6 +24,13 @@ exports.create = async (req, res) => {
   try {
     const data = await BiosecurityLog.create(req.body);
     res.status(201).json({ success: true, data });
+    // 🛡️ Farm Integrity Agent: emit inventory-adjacent event for biosecurity logs
+    agentEventBus.emit('INVENTORY_ADJUSTED', {
+      farmId: data.farm,
+      userId: req.user?._id,
+      record: data.toObject(),
+      adjustmentType: 'biosecurity_log',
+    });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }

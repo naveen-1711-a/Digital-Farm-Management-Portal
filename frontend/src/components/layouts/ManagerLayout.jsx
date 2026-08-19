@@ -4,7 +4,7 @@ import {
   FaLeaf, FaHome, FaPaw, FaSyringe, FaNotesMedical, 
   FaSeedling, FaPills, FaHardHat, FaUserClock, 
   FaBuilding, FaShieldAlt, FaClipboardList, FaFileAlt, 
-  FaBell, FaUser, FaSignOutAlt, FaBars, FaSearch, FaStethoscope
+  FaBell, FaUser, FaSignOutAlt, FaBars, FaSearch, FaStethoscope, FaRobot
 } from 'react-icons/fa';
 import VoiceAssistant from '../VoiceAssistant';
 
@@ -40,6 +40,7 @@ const ManagerLayout = ({ children, activeMenu, setActiveMenu }) => {
     { id: 'tasks', label: 'Tasks', icon: <FaClipboardList /> },
     { id: 'reports', label: 'Reports', icon: <FaFileAlt /> },
     { id: 'notifications', label: 'Notifications', icon: <FaBell /> },
+    { id: 'integrity', label: 'AI Integrity Center', icon: <FaRobot />, badge: '🔴' },
     { id: 'profile', label: 'Profile', icon: <FaUser /> }
   ];
 
@@ -62,9 +63,11 @@ const ManagerLayout = ({ children, activeMenu, setActiveMenu }) => {
               key={item.id}
               className={`manager-menu-item ${activeMenu === item.id ? 'active' : ''}`}
               onClick={() => { if (setActiveMenu) setActiveMenu(item.id); }}
+              style={item.id === 'integrity' ? { borderLeft: '3px solid #f59e0b', background: activeMenu === item.id ? '' : 'rgba(245,158,11,0.05)' } : {}}
             >
-              <span className="icon">{item.icon}</span>
-              <span>{item.label}</span>
+              <span className="icon" style={item.id === 'integrity' ? { color: '#f59e0b' } : {}}>{item.icon}</span>
+              <span style={item.id === 'integrity' ? { color: '#f59e0b', fontWeight: 600 } : {}}>{item.label}</span>
+              {item.badge && <span style={{ marginLeft: 'auto', fontSize: '0.65rem' }}>{item.badge}</span>}
             </div>
           ))}
         </div>

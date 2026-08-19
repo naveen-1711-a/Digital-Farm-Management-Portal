@@ -1,4 +1,5 @@
 const Attendance = require('../models/Attendance');
+const agentEventBus = require('../agents/orchestrator/agentEventBus');
 
 exports.getAll = async (req, res) => {
   try {
@@ -23,6 +24,12 @@ exports.create = async (req, res) => {
   try {
     const data = await Attendance.create(req.body);
     res.status(201).json({ success: true, data });
+    // 🛡️ Farm Integrity Agent: emit event after successful create
+    agentEventBus.emit('ATTENDANCE_MARKED', {
+      farmId: data.farm,
+      userId: req.user?._id,
+      record: data.toObject(),
+    });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
@@ -33,6 +40,12 @@ exports.update = async (req, res) => {
     const data = await Attendance.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
     if (!data) return res.status(404).json({ success: false, message: 'Not found' });
     res.status(200).json({ success: true, data });
+    // 🛡️ Farm Integrity Agent: emit event on update
+    agentEventBus.emit('ATTENDANCE_MARKED', {
+      farmId: data.farm,
+      userId: req.user?._id,
+      record: data.toObject(),
+    });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }

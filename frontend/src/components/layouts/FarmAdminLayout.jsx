@@ -4,7 +4,7 @@ import {
   FaLeaf, FaHome, FaBuilding, FaUsers, FaPaw, FaSyringe, FaBug,
   FaSeedling, FaPills, FaUserMd, FaHardHat, FaShieldAlt, FaChartBar,
   FaBell, FaCog, FaUserCircle, FaSignOutAlt, FaSearch, FaChevronDown,
-  FaBars, FaPlus, FaHeart, FaMicrochip, FaCalendarAlt
+  FaBars, FaPlus, FaHeart, FaMicrochip, FaCalendarAlt, FaRobot
 } from 'react-icons/fa';
 
 const FarmAdminLayout = ({ children, activeMenu, setActiveMenu }) => {
@@ -93,6 +93,12 @@ const FarmAdminLayout = ({ children, activeMenu, setActiveMenu }) => {
         { id: 'notifications', label: 'Notifications', icon: <FaBell /> },
         { id: 'settings', label: 'Farm Settings', icon: <FaCog /> }
       ]
+    },
+    {
+      title: '🤖 AI Intelligence', items: [
+        { id: 'integrity-overview', label: 'Farm Integrity Center', icon: <FaRobot />, highlight: true },
+        { id: 'farm-guard', label: 'FarmGuard AI Live', icon: <FaMicrochip />, highlight: true },
+      ]
     }
   ];
 
@@ -125,8 +131,8 @@ const FarmAdminLayout = ({ children, activeMenu, setActiveMenu }) => {
                     style={{ justifyContent: 'space-between' }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <span className="menu-icon">{item.icon}</span>
-                      <span>{item.label}</span>
+                      <span className="menu-icon" style={item.highlight ? { color: '#f59e0b' } : {}}>{item.icon}</span>
+                      <span style={item.highlight ? { color: '#f59e0b', fontWeight: 700 } : {}}>{item.label}</span>
                     </div>
                     {item.submenus && (
                       <FaChevronDown style={{

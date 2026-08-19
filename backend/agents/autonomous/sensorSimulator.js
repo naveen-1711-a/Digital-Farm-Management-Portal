@@ -1,0 +1,168 @@
+/**
+ * sensorSimulator.js
+ * Generates realistic simulated sensor data for FarmGuard AI.
+ * 
+ * In production: replace emit() calls with real IoT/RFID/camera feeds.
+ * For prototype: this runs on a schedule and generates realistic farm readings.
+ * 
+ * Simulates:
+ *  - Feed consumption (smart feeder)
+ *  - Animal count (RFID/camera)
+ *  - Water consumption
+ *  - Temperature / Humidity
+ *  - Attendance (RFID gate)
+ *  - Mortality count (daily)
+ *  - Medicine dispenser
+ */
+const SensorEvent = require('../../models/SensorEvent');
+const Animal = require('../../models/Animal');
+const User = require('../../models/User');
+const agentEventBus = require('../orchestrator/agentEventBus');
+
+// Inject occasional anomalies for demo (5% chance)
+const ANOMALY_CHANCE = 0.05;
+
+function gaussianRandom(mean, std) {
+  const u = 1 - Math.random();
+  const v = Math.random();
+  const z = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  return mean + z * std;
+}
+
+function maybeAnomaly(normal, anomalyMultiplier = 4) {
+  if (Math.random() < ANOMALY_CHANCE) {
+    return normal * (anomalyMultiplier + Math.random() * 2);
+  }
+  return normal;
+}
+
+/**
+ * Generate and persist sensor readings for all active farms.
+ * Called by the scheduler every configured interval.
+ */
+async function runSensorCycle() {
+  try {
+    // Get all active farms
+    const farms = await User.find({ role: 'farm_admin', status: 'approved' }).select('_id farmName farmType').lean();
+
+    for (const farm of farms) {
+      await generateFarmReadings(farm._id.toString());
+    }
+
+    console.log(`[SensorSimulator] Cycle complete for ${farms.length} farms`);
+  } catch (err) {
+    console.error('[SensorSimulator] Error:', err.message);
+  }
+}
+
+/**
+ * Generate all sensor readings for one farm.
+ */
+async function generateFarmReadings(farmId) {
+  const animalCount = await Animal.countDocuments({ farm: farmId, isActive: true });
+  if (animalCount === 0) return; // No animals — no sensor data
+
+  const readings = [];
+  const now = new Date();
+
+  // ── FEED CONSUMPTION (smart feeder) ─────────────────────────────────────
+  // Average 0.12 kg/bird/day for poultry
+  const expectedFeed = animalCount * 0.12;
+  const actualFeed = maybeAnomaly(gaussianRandom(expectedFeed, expectedFeed * 0.1));
+  readings.push({
+    farm: farmId, sensorType: 'feed_consumption',
+    value: Math.round(actualFeed * 10) / 10, unit: 'kg',
+    source: 'simulated', isAnomaly: actualFeed > expectedFeed * 2,
+    metadata: { expectedFeed, animalCount },
+  });
+
+  // ── WATER CONSUMPTION ────────────────────────────────────────────────────
+  const expectedWater = animalCount * 0.25; // 250ml/bird
+  const actualWater = maybeAnomaly(gaussianRandom(expectedWater, expectedWater * 0.08));
+  readings.push({
+    farm: farmId, sensorType: 'water_consumption',
+    value: Math.round(actualWater * 10) / 10, unit: 'liters',
+    source: 'simulated', isAnomaly: actualWater > expectedWater * 2,
+  });
+
+  // ── ANIMAL COUNT (RFID/Camera) ───────────────────────────────────────────
+  // Slight variation due to movement in/out of scan zones
+  const countVariation = Math.round(gaussianRandom(0, animalCount * 0.01));
+  readings.push({
+    farm: farmId, sensorType: 'animal_count',
+    value: Math.max(0, animalCount + countVariation), unit: 'count',
+    source: 'simulated',
+    metadata: { expectedCount: animalCount },
+  });
+
+  // ── MORTALITY COUNT (daily) ──────────────────────────────────────────────
+  // Normal: 0–1 per day for healthy farm. Spike = anomaly
+  const baseMortality = Math.random() < 0.7 ? 0 : 1;
+  const mortality = Math.random() < ANOMALY_CHANCE ? Math.floor(Math.random() * 15) + 5 : baseMortality;
+  readings.push({
+    farm: farmId, sensorType: 'mortality_count',
+    value: mortality, unit: 'count',
+    source: 'simulated', isAnomaly: mortality >= 5,
+  });
+
+  // ── TEMPERATURE ──────────────────────────────────────────────────────────
+  // Normal poultry: 24–28°C. Anomaly: >33°C (heat stress)
+  const temp = maybeAnomaly(gaussianRandom(26, 1.5), 1.35);
+  readings.push({
+    farm: farmId, sensorType: 'temperature',
+    value: Math.round(temp * 10) / 10, unit: '°C',
+    source: 'simulated', isAnomaly: temp > 32 || temp < 18,
+  });
+
+  // ── HUMIDITY ─────────────────────────────────────────────────────────────
+  const humidity = Math.min(100, maybeAnomaly(gaussianRandom(60, 8), 1.4));
+  readings.push({
+    farm: farmId, sensorType: 'humidity',
+    value: Math.round(humidity), unit: '%',
+    source: 'simulated', isAnomaly: humidity > 80,
+  });
+
+  // ── RFID ATTENDANCE ──────────────────────────────────────────────────────
+  // Simulate 1–3 worker entries per cycle
+  const workerEntries = Math.floor(Math.random() * 3) + 1;
+  readings.push({
+    farm: farmId, sensorType: 'rfid_attendance',
+    value: workerEntries, unit: 'entries',
+    source: 'simulated',
+    metadata: { autoGenerated: true },
+  });
+
+  // ── FEED BIN LEVEL ────────────────────────────────────────────────────────
+  const binLevel = Math.round(gaussianRandom(65, 15)); // % full
+  readings.push({
+    farm: farmId, sensorType: 'feed_bin_level',
+    value: Math.max(0, Math.min(100, binLevel)), unit: '%',
+    source: 'simulated', isAnomaly: binLevel < 15,
+  });
+
+  // Save all readings in bulk
+  await SensorEvent.insertMany(readings);
+
+  // ── Emit events for anomalous readings ───────────────────────────────────
+  const anomalousReadings = readings.filter(r => r.isAnomaly);
+  for (const reading of anomalousReadings) {
+    agentEventBus.emit('SENSOR_ANOMALY', {
+      farmId,
+      sensorType: reading.sensorType,
+      value: reading.value,
+      unit: reading.unit,
+      metadata: reading.metadata,
+    });
+  }
+
+  return readings;
+}
+
+/**
+ * Trigger a single farm sensor cycle (for manual/API-triggered runs).
+ */
+async function triggerFarmCycle(farmId) {
+  return generateFarmReadings(farmId);
+}
+
+module.exports = { runSensorCycle, triggerFarmCycle, generateFarmReadings };

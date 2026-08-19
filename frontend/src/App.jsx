@@ -34,6 +34,9 @@ import ReportsManagement from './pages/manager/ReportsManagement';
 import NotificationsManagement from './pages/manager/NotificationsManagement';
 import ProfileManagement from './pages/manager/ProfileManagement';
 import VeterinarianManagement from './pages/manager/VeterinarianManagement';
+import IntegrityCenter from './pages/manager/IntegrityCenter';
+import IntegrityOverview from './pages/farmAdmin/IntegrityOverview';
+import FarmGuardDashboard from './pages/farmAdmin/FarmGuardDashboard';
 import { Toaster } from 'react-hot-toast';
 import VoiceAssistant from './components/VoiceAssistant';
 
@@ -119,6 +122,10 @@ function App() {
         FarmContent = <AllFarmManagers />;
       } else if (activeFarmAdminMenu === 'calendar') {
         FarmContent = <FarmCalendar />;
+      } else if (activeFarmAdminMenu === 'integrity-overview') {
+        FarmContent = <IntegrityOverview />;
+      } else if (activeFarmAdminMenu === 'farm-guard') {
+        FarmContent = <FarmGuardDashboard />;
       } else {
         FarmContent = <FarmAdminDashboard />;
       }
@@ -147,6 +154,8 @@ function App() {
         case 'reports': ManagerContent = <ReportsManagement />; break;
         case 'notifications': ManagerContent = <NotificationsManagement />; break;
         case 'profile': ManagerContent = <ProfileManagement />; break;
+        case 'integrity': ManagerContent = <IntegrityCenter />; break;
+        case 'farm-guard': ManagerContent = <FarmGuardDashboard />; break;
         default: ManagerContent = <ManagerDashboard />; break;
       }
 

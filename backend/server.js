@@ -30,6 +30,13 @@ const attendanceRoutes = require('./routes/attendanceRoutes');
 const treatmentRoutes = require('./routes/treatmentRoutes');
 const predictionRoutes = require('./routes/predictionRoutes');
 const automationRoutes = require('./routes/automationRoutes');
+const integrityRoutes = require('./routes/integrityRoutes');
+const farmGuardRoutes = require('./routes/farmGuardRoutes');
+
+// ── Autonomous AI Agents ───────────────────────────────────────────────────
+const farmIntegrityAgent = require('./agents/orchestrator/farmIntegrityAgent');
+const farmGuardAgent = require('./agents/autonomous/farmGuardAgent');
+const { startScheduler } = require('./agents/autonomous/agentScheduler');
 
 const app = express();
 
@@ -72,6 +79,8 @@ app.use('/api/attendance', attendanceRoutes);
 app.use('/api/treatments', treatmentRoutes);
 app.use('/api/predictions', predictionRoutes);
 app.use('/api/automation', automationRoutes);
+app.use('/api/integrity', integrityRoutes);
+app.use('/api/farmguard', farmGuardRoutes);
 
 // ── Health Check ──────────────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
@@ -101,9 +110,17 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 connectDB().then(() => {
+  // ── Initialize AI Agents ──────────────────────────────────────────────
+  farmIntegrityAgent.initialize();   // Event-driven fraud/anomaly detector
+  farmGuardAgent.initialize();       // Autonomous farm operations agent
+  startScheduler();                  // Cron-based sensor + observation cycles
+
   app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
     console.log(`📁 Uploads served at http://localhost:${PORT}/uploads`);
     console.log(`🔗 API Health: http://localhost:${PORT}/api/health`);
+    console.log(`🛡️  Farm Integrity Agent: ACTIVE`);
+    console.log(`🤖  FarmGuard AI Autonomous Agent: ACTIVE`);
+    console.log(`⏰  Autonomous Scheduler: ACTIVE`);
   });
 });

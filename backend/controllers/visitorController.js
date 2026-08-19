@@ -1,4 +1,5 @@
 const Visitor = require('../models/Visitor');
+const agentEventBus = require('../agents/orchestrator/agentEventBus');
 
 exports.getAll = async (req, res) => {
   try {
@@ -23,6 +24,14 @@ exports.create = async (req, res) => {
   try {
     const data = await Visitor.create(req.body);
     res.status(201).json({ success: true, data });
+    // 🛡️ Farm Integrity Agent: emit on every visitor registration
+    // biosecurityChecklist comes from request body (PPE, footbath, disinfection flags)
+    agentEventBus.emit('VISITOR_REGISTERED', {
+      farmId: data.farm,
+      userId: req.user?._id,
+      record: data.toObject(),
+      biosecurityChecklist: req.body.biosecurityChecklist || null,
+    });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }

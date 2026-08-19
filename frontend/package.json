@@ -12,8 +12,11 @@
   "dependencies": {
     "@splinetool/react-spline": "^4.1.0",
     "axios": "^1.18.1",
+    "canvg": "^4.0.1",
     "chart.js": "^4.5.1",
+    "dompurify": "^3.0.9",
     "framer-motion": "^12.43.0",
+    "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.8",
     "react": "^19.2.7",

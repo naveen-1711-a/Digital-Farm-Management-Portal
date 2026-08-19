@@ -3,7 +3,10 @@ import json
 import uuid
 
 import numpy as np
-import tensorflow as tf
+try:
+    import tensorflow as tf
+except Exception:
+    tf = None
 
 from PIL import Image
 from flask import Flask, request, jsonify
@@ -152,9 +155,12 @@ print("=" * 70)
 
 try:
 
-    model = tf.keras.models.load_model(MODEL_PATH)
-
-    print("[SUCCESS] AI Model Loaded Successfully")
+    if tf is not None:
+        model = tf.keras.models.load_model(MODEL_PATH)
+        print("[SUCCESS] AI Model Loaded Successfully")
+    else:
+        model = None
+        print("[WARNING] TensorFlow is not available in Python environment. API running in fallback status mode.")
 
 except Exception as e:
 
@@ -196,9 +202,10 @@ def preprocess_image(image):
     )
 
     # Same preprocessing used during training
-    image_array = tf.keras.applications.efficientnet.preprocess_input(
-        image_array
-    )
+    if tf is not None:
+        image_array = tf.keras.applications.efficientnet.preprocess_input(
+            image_array
+        )
 
     return image_array
 

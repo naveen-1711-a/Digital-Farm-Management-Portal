@@ -1,4 +1,5 @@
 const MedicineInventory = require('../models/MedicineInventory');
+const agentEventBus = require('../agents/orchestrator/agentEventBus');
 
 exports.getAll = async (req, res) => {
   try {
@@ -23,6 +24,12 @@ exports.create = async (req, res) => {
   try {
     const data = await MedicineInventory.create(req.body);
     res.status(201).json({ success: true, data });
+    // 🛡️ Farm Integrity Agent: emit event after successful create
+    agentEventBus.emit('MEDICINE_USAGE_UPDATED', {
+      farmId: data.farm,
+      userId: req.user?._id,
+      record: data.toObject(),
+    });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
@@ -30,9 +37,20 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
+    // Capture previous quantity before update (for edit detection)
+    const existing = await MedicineInventory.findById(req.params.id).lean();
+    const previousQuantity = existing?.quantityUnits;
+
     const data = await MedicineInventory.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
     if (!data) return res.status(404).json({ success: false, message: 'Not found' });
     res.status(200).json({ success: true, data });
+    // 🛡️ Farm Integrity Agent: emit event after successful update
+    agentEventBus.emit('MEDICINE_USAGE_UPDATED', {
+      farmId: data.farm,
+      userId: req.user?._id,
+      record: data.toObject(),
+      previousQuantity,
+    });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
