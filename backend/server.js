@@ -92,6 +92,15 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// ── Root Welcome Route ────────────────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Welcome to the Digital Farm Management API. The server is running successfully!',
+    version: '1.0.0'
+  });
+});
+
 // ── 404 Handler ───────────────────────────────────────────────────────────────
 app.use((req, res) => {
   res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` });
