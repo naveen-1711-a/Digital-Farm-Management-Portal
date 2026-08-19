@@ -4,9 +4,9 @@ A comprehensive, AI-driven digital platform designed to optimize farm operations
 
 ## ✅ Features Implemented
 
-### System Administrator (Admin)
+### Overall Admin
 - Full dashboard with system-wide statistics
-- Create / Edit / Delete Farm Admins and Managers
+- Create / Edit / Delete Farm Admins, Managers, and Workers
 - Manage master data (Breeds, Diseases, Vaccines, Feed Categories, Medicine Categories)
 - View all farms and monitor overall system health
 - Toggle user active/inactive status
@@ -14,7 +14,7 @@ A comprehensive, AI-driven digital platform designed to optimize farm operations
 ### Farm Administrator (Farm Admin)
 - Dashboard with farm-specific stats (Animals, Sheds, Workers)
 - Add and manage sheds and livestock inventory
-- View and manage farm workers and veterinarians
+- Add, Edit, and Manage Farm Workers and Veterinarians
 - Manage Biosecurity protocols and audit logs
 - Monitor feed and medicine inventory levels
 - **FarmGuard Dashboard**: View autonomous agent insights and ML predictions (e.g., Chicken Feed Prediction)
@@ -28,6 +28,13 @@ A comprehensive, AI-driven digital platform designed to optimize farm operations
 - Update feed consumption and medicine usage
 - Log vaccination drives and health treatments
 - **Integrity Center**: Investigate correlation engine reports and agent actions
+
+### Farm Worker
+- Login (Account created by Admin or Farm Admin)
+- View assigned daily tasks and calendar schedules
+- Mark daily attendance and shift timings
+- Report on-ground animal health observations and feed levels
+- Receive notifications for critical tasks (e.g., vaccination drives)
 
 ### Autonomous AI & ML Agents
 - **FarmGuard Agent**: Continuously monitors farm integrity and detects anomalies without human intervention.
