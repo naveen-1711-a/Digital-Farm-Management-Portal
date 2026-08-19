@@ -2,29 +2,38 @@
 
 A comprehensive, AI-driven digital platform designed to optimize farm operations, track biosecurity, and monitor animal health. This platform leverages a modern web stack alongside autonomous AI agents and machine learning models to provide real-time insights, anomaly detection, and farm orchestration.
 
-## 🌟 Comprehensive Features
+## ✅ Features Implemented
 
-### 1. FarmGuard Autonomous Agents
-- **Orchestration & Reasoning Engine**: Built using Groq LLM API to interpret sensor alerts and farm anomalies.
-- **Investigation Agent**: Correlates different events (e.g., biosecurity breaches with animal health decline) to identify root causes.
-- **Detectors**: Specialized agent modules for detecting anomalies in Animal Health, Attendance, Audits, Biosecurity, Feed, Inventory, Medicine, and Vaccinations.
-- **Agent Memory**: Preserves context and historical actions for continuous autonomous learning and alerting.
+### System Administrator (Admin)
+- Full dashboard with system-wide statistics
+- Create / Edit / Delete Farm Admins and Managers
+- Manage master data (Breeds, Diseases, Vaccines, Feed Categories, Medicine Categories)
+- View all farms and monitor overall system health
+- Toggle user active/inactive status
 
-### 2. Machine Learning & Predictive Analytics
-- **Chicken Feed Prediction**: Dedicated sub-project with Python-based models for predicting and optimizing chicken feed consumption.
-- **Behavior Profiling**: ML microservice utilizing Isolation Forest to track livestock behaviors and detect unusual activity (illness, distress).
-- **Sensor Simulation**: Simulates IoT farm sensors for temperature, humidity, and animal activity to feed the ML models.
+### Farm Administrator (Farm Admin)
+- Dashboard with farm-specific stats (Animals, Sheds, Workers)
+- Add and manage sheds and livestock inventory
+- View and manage farm workers and veterinarians
+- Manage Biosecurity protocols and audit logs
+- Monitor feed and medicine inventory levels
+- **FarmGuard Dashboard**: View autonomous agent insights and ML predictions (e.g., Chicken Feed Prediction)
+- **Integrity Overview**: Monitor real-time sensor anomaly alerts and risk signals
 
-### 3. Farm Operations Management
-- **Biosecurity Logging**: Maintain strict biosecurity logs for farm access and sanitation compliance.
-- **Vaccination Tracking**: Schedule, track, and record vaccination batches for livestock.
-- **Feed & Inventory Control**: Track feed consumption rates, monitor stock levels, and alert on low inventory.
-- **Staff Attendance & Roles**: Manage farm staff, track attendance, and assign specific operational roles.
+### Farm Manager
+- Login (Account created by Admin or Farm Admin only)
+- Task and Calendar event management
+- Record daily attendance for farm workers
+- Log visitor entry/exit and vehicle tracking
+- Update feed consumption and medicine usage
+- Log vaccination drives and health treatments
+- **Integrity Center**: Investigate correlation engine reports and agent actions
 
-### 4. Interactive Dashboards & UX
-- **Role-Based Access**: Dedicated dashboard interfaces for Admin, Farm Managers, and Farm Admins.
-- **Integrity Center**: A central hub to review FarmGuard agent actions, risk signals, and correlation engine reports.
-- **Visual Analytics**: Interactive data visualization powered by Recharts and Chart.js, enhanced with Framer Motion animations.
+### Autonomous AI & ML Agents
+- **FarmGuard Agent**: Continuously monitors farm integrity and detects anomalies without human intervention.
+- **Biosecurity & Audit Detectors**: Automatically identifies breaches in protocols based on log patterns.
+- **Groq Reasoning Engine**: Investigates root causes by correlating multiple sensor and log data points via LLaMA 3.
+- **ML Predictions**: Forecasts chicken feed requirements and detects abnormal livestock behavior using Scikit-Learn (Isolation Forest).
 
 ## 🛠️ Technology Stack
 
