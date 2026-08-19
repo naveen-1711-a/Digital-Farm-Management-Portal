@@ -158,3 +158,20 @@ Digital-Farm-Management-Portal/
 ## 🔒 Security & Environment Variables
 **Never commit your `.env` file to version control.** 
 Always use `.env.example` as a template for new developers. The repository is configured to automatically ignore all `.env` files via `.gitignore`.
+
+### Required Environment Variables (Backend)
+To run the backend and AI agents properly, you must configure the following variables in your `backend/.env` file:
+
+#### Core Server & Database
+- `PORT`: Port for the Node.js server (Default: `5000`)
+- `MONGODB_URI`: Connection string for your MongoDB instance or MongoDB Atlas cluster.
+- `JWT_SECRET`: A secure, random string used to sign authentication tokens.
+- `ADMIN_EMAIL` & `ADMIN_PASSWORD`: Default credentials used to seed the initial system administrator.
+
+#### FarmGuard AI / Groq API
+- `GROQ_API_KEY`: Your private API key from Groq to power the AI reasoning agents.
+- `GROQ_MODEL`: The LLM model to use (e.g., `llama-3.1-8b-instant`).
+
+#### Microservices Integration
+- `ML_SERVICE_URL`: URL where the Python ML service is running (Default: `http://localhost:5001`).
+- `FRONTEND_URL`: URL where the React frontend is running (Default: `http://localhost:5173`) to configure CORS properly.
