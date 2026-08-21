@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaSignInAlt, FaLeaf } from 'react-icons/fa';
 
 function LoginPage({ initialRole = 'Overall Admin' }) {
