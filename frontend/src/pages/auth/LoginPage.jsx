@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaSignInAlt, FaLeaf } from 'react-icons/fa';
 
 function LoginPage({ initialRole = 'Overall Admin' }) {
@@ -17,7 +16,6 @@ function LoginPage({ initialRole = 'Overall Admin' }) {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState('');
-  const navigate = useNavigate();
 
   const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
