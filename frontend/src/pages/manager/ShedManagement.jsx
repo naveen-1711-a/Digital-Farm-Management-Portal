@@ -27,7 +27,7 @@ const ShedManagement = () => {
 
   const fetchSheds = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/sheds');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/sheds`);
       setSheds(res.data.data);
       setLoading(false);
     } catch (err) {
@@ -45,10 +45,10 @@ const ShedManagement = () => {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`http://localhost:5000/api/sheds/${editId}`, formData);
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/sheds/${editId}`, formData);
         toast.success("Shed updated successfully!");
       } else {
-        await axios.post('http://localhost:5000/api/sheds', formData);
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/sheds`, formData);
         toast.success("New shed added successfully!");
       }
       fetchSheds();
@@ -64,7 +64,7 @@ const ShedManagement = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this shed?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/sheds/${id}`);
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/sheds/${id}`);
         toast.error('Shed deleted');
         fetchSheds();
       } catch (err) {
@@ -79,7 +79,7 @@ const ShedManagement = () => {
       const nextWeek = new Date();
       nextWeek.setDate(nextWeek.getDate() + 7);
       
-      await axios.put(`http://localhost:5000/api/sheds/${shed._id}`, { 
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/sheds/${shed._id}`, { 
         lastCleanedDate: today,
         nextCleaningDate: nextWeek.toISOString()
       });

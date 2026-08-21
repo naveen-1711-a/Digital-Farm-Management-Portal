@@ -49,7 +49,7 @@ const FeedManagement = () => {
   // Fetch Inventory
   const fetchInventory = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/feed-inventory');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/feed-inventory`);
       const formatted = res.data.data.map(item => ({
         ...item,
         purchaseDate: item.purchaseDate ? item.purchaseDate.split('T')[0] : '',
@@ -66,7 +66,7 @@ const FeedManagement = () => {
   const fetchAutoReorders = async () => {
     setLoadingPOs(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/automation/auto-reorder');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/automation/auto-reorder`);
       if (res.data.success && res.data.data) {
         setDraftPOs(res.data.data);
       }
@@ -88,10 +88,10 @@ const FeedManagement = () => {
     try {
       const payload = { ...feedForm, totalCost: (feedForm.quantity * feedForm.purchasePrice) || 0, status: feedForm.quantity <= feedForm.minStock ? 'Low Stock' : 'Available' };
       if (isEditingFeed) {
-        await axios.put(`http://localhost:5000/api/feed-inventory/${editFeedId}`, payload);
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/feed-inventory/${editFeedId}`, payload);
         toast.success('Feed stock updated successfully!');
       } else {
-        await axios.post('http://localhost:5000/api/feed-inventory', payload);
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/feed-inventory`, payload);
         toast.success('New feed stock added!');
       }
       fetchInventory();
@@ -105,7 +105,7 @@ const FeedManagement = () => {
   const handleDeleteFeed = async (id) => {
     if (window.confirm("Are you sure you want to delete this feed record?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/feed-inventory/${id}`);
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/feed-inventory/${id}`);
         toast.error('Feed record deleted.');
         fetchInventory();
       } catch (err) {

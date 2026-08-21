@@ -16,8 +16,9 @@ function LoginPage({ initialRole = 'Overall Admin' }) {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState('');
+  const navigate = useNavigate();
 
-  const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

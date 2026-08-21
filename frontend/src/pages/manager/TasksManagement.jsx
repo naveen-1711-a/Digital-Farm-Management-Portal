@@ -23,7 +23,7 @@ const TasksManagement = () => {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/tasks');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/tasks`);
       const formattedTasks = res.data.data.map(t => ({
         ...t,
         startDate: t.startDate ? t.startDate.split('T')[0] : '',
@@ -44,10 +44,10 @@ const TasksManagement = () => {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`http://localhost:5000/api/tasks/${editingId}`, formData);
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/tasks/${editingId}`, formData);
         toast.success("Task updated successfully!");
       } else {
-        await axios.post('http://localhost:5000/api/tasks', formData);
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/tasks`, formData);
         toast.success("New task assigned successfully!");
       }
       fetchTasks();
@@ -62,7 +62,7 @@ const TasksManagement = () => {
 
   const handleUpdateStatus = async (id, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/tasks/${id}`, { status: newStatus });
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/tasks/${id}`, { status: newStatus });
       toast.success(`Task marked as ${newStatus}`);
       fetchTasks();
     } catch (err) {
@@ -74,7 +74,7 @@ const TasksManagement = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Delete this task?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/tasks/${id}`);
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/tasks/${id}`);
         toast.error('Task Deleted');
         fetchTasks();
       } catch (err) {

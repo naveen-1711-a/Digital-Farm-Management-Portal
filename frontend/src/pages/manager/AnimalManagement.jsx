@@ -120,7 +120,7 @@ const AnimalManagement = () => {
   const handleTriggerEmergency = async () => {
     setEmergencyLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/automation/trigger-emergency', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/automation/trigger-emergency`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ shed: emergencyConfig.shed, emergencyType: emergencyConfig.type })
@@ -145,7 +145,7 @@ const AnimalManagement = () => {
     setAutoVetLoading(true);
     const toastId = toast.loading('AI analyzing vaccination histories...');
     try {
-      const response = await fetch('http://localhost:5000/api/automation/auto-vet', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/automation/auto-vet`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ animalsToCheck: animals }) // Pass current animals to simulate check

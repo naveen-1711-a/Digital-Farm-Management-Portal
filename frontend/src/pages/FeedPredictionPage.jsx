@@ -136,7 +136,7 @@ const FeedPredictionPage = ({ onNavigateToMedicine }) => {
 
         // Save to MongoDB via Node.js backend
         try {
-          await axios.post('http://localhost:5000/api/predictions', {
+          await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/predictions`, {
             type: 'feed',
             inputData: formData,
             predictionResult: response.data
