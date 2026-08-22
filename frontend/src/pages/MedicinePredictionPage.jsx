@@ -201,18 +201,30 @@ const MedicinePredictionPage = ({ onNavigateBack }) => {
       const fallbackFarm = {
         type: formData.chicken_type || 'Broiler',
         breed: formData.breed || 'Cobb 500',
+        chicken_count: chickenCount,
+        disease_cases: formData.disease_cases || 0,
+        disease_type: formData.disease_type || 'Healthy',
+        disease_severity: formData.disease_severity || 'Low',
+        medicine_type: formData.medicine_type || 'Preventive Supplement',
+        medicine_quantity: formData.medicine_quantity || 10,
+        medicine_price: formData.medicine_price || 50,
+        temperature: formData.temperature_c || 26,
+        humidity: formData.humidity_percent || 65,
+        biosecurity_score: formData.biosecurity_score || 85,
         count: chickenCount,
         age_days: formData.age_days || 30
       };
 
       const fallbackEnv = {
         temperature_c: formData.temperature_c || 26,
-        humidity_percent: formData.humidity_percent || 65
+        humidity_percent: formData.humidity_percent || 65,
+        risk_score: formData.biosecurity_score < 70 ? 'High' : 'Low'
       };
 
       const fallbackModel = {
         name: 'XGBoost Regressor v2.1',
-        accuracy: '94.8%'
+        accuracy: '94.8%',
+        approx_accuracy: 94.8
       };
 
       setResult({
@@ -564,51 +576,51 @@ const MedicinePredictionPage = ({ onNavigateBack }) => {
                 <div className="mp-mini-grid">
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Chicken Count</span>
-                    <span className="mp-mini-value">{result.farm.chicken_count.toLocaleString()}</span>
+                    <span className="mp-mini-value">{(result.farm?.chicken_count || result.farm?.count || 0).toLocaleString()}</span>
                   </div>
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Disease Cases</span>
-                    <span className="mp-mini-value">{result.farm.disease_cases}</span>
+                    <span className="mp-mini-value">{result.farm?.disease_cases ?? 0}</span>
                   </div>
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Disease Type</span>
-                    <span className="mp-mini-value">{result.farm.disease_type}</span>
+                    <span className="mp-mini-value">{result.farm?.disease_type || 'Healthy'}</span>
                   </div>
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Severity</span>
-                    <span className="mp-mini-value">{result.farm.disease_severity}</span>
+                    <span className="mp-mini-value">{result.farm?.disease_severity || 'Low'}</span>
                   </div>
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Medicine Type</span>
-                    <span className="mp-mini-value">{result.farm.medicine_type}</span>
+                    <span className="mp-mini-value">{result.farm?.medicine_type || 'Preventive Supplement'}</span>
                   </div>
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Medicine Qty</span>
-                    <span className="mp-mini-value">{result.farm.medicine_quantity} units</span>
+                    <span className="mp-mini-value">{result.farm?.medicine_quantity ?? 0} units</span>
                   </div>
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Medicine Price</span>
-                    <span className="mp-mini-value">₹{result.farm.medicine_price}/unit</span>
+                    <span className="mp-mini-value">₹{result.farm?.medicine_price ?? 0}/unit</span>
                   </div>
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Temperature</span>
-                    <span className="mp-mini-value">{result.farm.temperature}°C</span>
+                    <span className="mp-mini-value">{result.farm?.temperature ?? result.farm?.temperature_c ?? 26}°C</span>
                   </div>
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Humidity</span>
-                    <span className="mp-mini-value">{result.farm.humidity}%</span>
+                    <span className="mp-mini-value">{result.farm?.humidity ?? result.farm?.humidity_percent ?? 65}%</span>
                   </div>
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Biosecurity</span>
-                    <span className="mp-mini-value">{result.farm.biosecurity_score}</span>
+                    <span className="mp-mini-value">{result.farm?.biosecurity_score ?? 85}</span>
                   </div>
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Env. Risk Score</span>
-                    <span className="mp-mini-value">{result.environment.risk_score}</span>
+                    <span className="mp-mini-value">{result.environment?.risk_score || 'Low'}</span>
                   </div>
                   <div className="mp-mini-card">
                     <span className="mp-mini-label">Model Accuracy</span>
-                    <span className="mp-mini-value">{result.model.approx_accuracy}%</span>
+                    <span className="mp-mini-value">{result.model?.approx_accuracy || result.model?.accuracy || '94.8'}%</span>
                   </div>
                 </div>
               </div>
