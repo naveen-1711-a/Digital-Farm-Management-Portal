@@ -225,7 +225,7 @@ function App() {
         {/* Mobile slide-in menu */}
         <div className={`mobile-menu${mobileMenuOpen ? ' open' : ''}`}>
           <div className="mobile-menu-header">
-            <div className="logo">
+            <div className="logo" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>
               <FaLeaf className="logo-icon" />
               <span>Poultry AI</span>
             </div>

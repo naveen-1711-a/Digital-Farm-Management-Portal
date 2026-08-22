@@ -253,12 +253,14 @@ p {
   background: rgba(0, 0, 0, 0.45);
   z-index: 1050;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   backdrop-filter: blur(2px);
 }
 
 .mobile-menu-overlay.active {
   opacity: 1;
+  visibility: visible;
 }
 
 /* ============================================
@@ -756,12 +758,12 @@ p {
 }
 
 .fp-hero-stats {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   margin-top: 1rem;
-  flex-wrap: wrap;
   animation: float 6s ease-in-out infinite;
 }
 
@@ -772,8 +774,7 @@ p {
   background: #ffffff;
   border: 1px solid var(--border-color);
   border-radius: 1rem;
-  padding: 1rem 2rem;
-  min-width: 150px;
+  padding: 1rem 1.25rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
@@ -801,14 +802,20 @@ p {
   text-align: center;
 }
 
+/* 2x2 grid on tablet */
 @media (max-width: 768px) {
   .fp-hero-stats {
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    animation: none;
   }
 
   .fp-stat {
-    width: 100%;
-    min-width: 0;
+    padding: 0.9rem 1rem;
+  }
+
+  .fp-stat-num {
+    font-size: 1.65rem;
   }
 }
 
@@ -1938,12 +1945,13 @@ p {
   }
 
   .fp-hero-stats {
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
+    animation: none;
   }
 
   .fp-stat {
-    min-width: 120px;
-    padding: 0.75rem 1.25rem;
+    padding: 0.85rem 1rem;
   }
 
   .fp-stat-num {
@@ -2183,13 +2191,16 @@ p {
   }
 
   .fp-hero-stats {
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
   }
 
   .fp-stat {
-    width: 100%;
-    min-width: 0;
+    padding: 0.75rem 0.75rem;
+  }
+
+  .fp-stat-num {
+    font-size: 1.45rem;
   }
 
   /* Features grid: single column on mobile */
