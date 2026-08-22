@@ -108,6 +108,8 @@ const MedicinePredictionPage = ({ onNavigateBack }) => {
     }
 
     doc.save('medicine_cost_prediction_report.pdf');
+  };
+
   const handlePredict = async () => {
     setLoading(true);
     setError(null);
