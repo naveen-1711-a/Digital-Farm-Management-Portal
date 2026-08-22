@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './styles/index.css';
-import { FaLeaf } from 'react-icons/fa';
+import { FaLeaf, FaBars, FaTimes } from 'react-icons/fa';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import FeaturesPage from './pages/FeaturesPage';
@@ -46,6 +46,7 @@ function App() {
   const [activeFarmAdminMenu, setActiveFarmAdminMenu] = useState('dashboard');
   const [activeManagerMenu, setActiveManagerMenu] = useState('dashboard');
   const [selectedRole, setSelectedRole] = useState('Overall Admin');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Sync with URL hash on load and changes
   useEffect(() => {
@@ -74,7 +75,23 @@ function App() {
     setActivePage(page);
     window.location.hash = page;
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setMobileMenuOpen(false);
   };
+
+  // Close mobile menu on resize to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 992) setMobileMenuOpen(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
 
   const handleGlobalLogout = () => {
     localStorage.removeItem('token');
@@ -173,6 +190,8 @@ function App() {
             <FaLeaf className="logo-icon" />
             <span>Poultry AI</span>
           </div>
+
+          {/* Desktop nav links */}
           <ul className="nav-links">
             <li><a href="#home" onClick={(e) => { e.preventDefault(); navigate('home'); }} style={{ color: activePage === 'home' ? 'var(--primary)' : '' }}>Home</a></li>
             <li><a href="#features" onClick={(e) => { e.preventDefault(); navigate('features'); }} style={{ color: activePage === 'features' ? 'var(--primary)' : '' }}>Features</a></li>
@@ -182,11 +201,66 @@ function App() {
             <li><a href="#contact" onClick={(e) => { e.preventDefault(); navigate('contact'); }} style={{ color: activePage === 'contact' ? 'var(--primary)' : '' }}>Contact</a></li>
             <li><a href="#register" onClick={(e) => { e.preventDefault(); navigate('register'); }} style={{ color: activePage === 'register' ? 'var(--primary)' : '' }}>Sign Up</a></li>
           </ul>
+
+          {/* Desktop action buttons */}
           <div className="nav-actions">
             <button className="btn-secondary" onClick={() => navigate('login')}>Login</button>
             <button className="btn-primary" onClick={() => navigate('register')}>Get Started</button>
           </div>
+
+          {/* Hamburger button (mobile only) */}
+          <button
+            className={`hamburger-btn${mobileMenuOpen ? ' open' : ''}`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
         </nav>
+
+        {/* Mobile menu overlay */}
+        <div className={`mobile-menu-overlay${mobileMenuOpen ? ' active' : ''}`} onClick={() => setMobileMenuOpen(false)} />
+
+        {/* Mobile slide-in menu */}
+        <div className={`mobile-menu${mobileMenuOpen ? ' open' : ''}`}>
+          <div className="mobile-menu-header">
+            <div className="logo">
+              <FaLeaf className="logo-icon" />
+              <span>Poultry AI</span>
+            </div>
+            <button className="mobile-close-btn" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
+              <FaTimes />
+            </button>
+          </div>
+          <nav className="mobile-nav">
+            <button className={`mobile-nav-link${activePage === 'home' ? ' active' : ''}`} onClick={() => navigate('home')}>
+              🏠 Home
+            </button>
+            <button className={`mobile-nav-link${activePage === 'features' ? ' active' : ''}`} onClick={() => navigate('features')}>
+              ⚡ Features
+            </button>
+            <button className={`mobile-nav-link${activePage === 'about' ? ' active' : ''}`} onClick={() => navigate('about')}>
+              ℹ️ About
+            </button>
+            <button className={`mobile-nav-link${activePage === 'ai-disease-prediction' ? ' active' : ''}`} onClick={() => navigate('ai-disease-prediction')}>
+              🦠 AI Disease Prediction
+            </button>
+            <button className={`mobile-nav-link${activePage === 'ai-feed-prediction' ? ' active' : ''}`} onClick={() => navigate('ai-feed-prediction')}>
+              🌾 AI Feed Prediction
+            </button>
+            <button className={`mobile-nav-link${activePage === 'contact' ? ' active' : ''}`} onClick={() => navigate('contact')}>
+              📞 Contact
+            </button>
+            <button className={`mobile-nav-link${activePage === 'register' ? ' active' : ''}`} onClick={() => navigate('register')}>
+              ✨ Sign Up
+            </button>
+          </nav>
+          <div className="mobile-menu-actions">
+            <button className="btn-secondary mobile-btn-full" onClick={() => navigate('login')}>Login</button>
+            <button className="btn-primary mobile-btn-full" onClick={() => navigate('register')}>Get Started</button>
+          </div>
+        </div>
 
         <main>
           {activePage === 'about' ? <AboutPage /> :
